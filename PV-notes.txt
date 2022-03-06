@@ -1,0 +1,35 @@
+Changes that I had to introduce in my Eclipse.
+
+1. @maven build, you need to add goals: e.g., 
+- compile (just to build)
+- package (to produce a .jar in the target)
+
+2. added a src/test/resources folder, because it complains
+
+3. added a couple of lines in the pom
+Since I work with java 14, in the <properties> I added
+		<java.version>1.14</java.version>
+	   	<maven.compiler.source>1.14</maven.compiler.source>
+    	<maven.compiler.target>1.14</maven.compiler.target>
+See also
+ https://stackoverflow.com/questions/53034953/error-source-option-5-is-no-longer-supported-use-6-or-later-on-maven-compile
+ https://stackoverflow.com/questions/54467287/how-to-specify-java-version-in-spring-spring-boot-pom-xml
+ 
+4. To run the project --which means you run the main() at
+  com.mastering.spring.context.LaunchJavaContext    	
+you need to add arguments to the VM.
+So,  at Run Configurations -> Arguments -> VM arguments I added
+  --add-opens java.base/java.lang=ALL-UNNAMED
+See also: https://stackoverflow.com/questions/46671472/illegal-reflective-access-by-org-springframework-cglib-core-reflectutils1  
+
+5. at the context Launcher, added a close() of the context
+((ConfigurableApplicationContext)context ).close();
+
+6. updated the header of log4j.xml at src/main/resources
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
+
+Instead you can use:
+
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+
+See also: https://stackoverflow.com/questions/4968934/why-is-log4j-trying-to-find-log4j-dtd
